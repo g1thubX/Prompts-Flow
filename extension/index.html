@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased h-full flex items-center justify-center bg-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PromptFlow</title>
+</head>
+  <!-- 
+    Master Builder Note:
+    We use fixed dimensions (w-[600px] h-[600px]) on the body because Chrome Extensions
+    respect the body size for the popup window.
+    The html classes above (flex, justify-center) center this "device" on the screen
+    when viewing in a standard browser, creating a sleek simulator look.
+    
+    Update: Increased border-radius to rounded-[2.5rem] for a softer, organic device look.
+  -->
+  <body class="w-[600px] h-[600px] p-2 overflow-hidden bg-white mx-auto my-0">
+    <div id="root" class="w-full h-full"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

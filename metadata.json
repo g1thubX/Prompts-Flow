@@ -1,0 +1,5 @@
+{
+  "name": "Prompt Architect",
+  "description": "A masterfully designed local prompt manager. Store, organize, and dynamically inject variables into your AI prompts with zero latency.",
+  "requestFramePermissions": []
+}
