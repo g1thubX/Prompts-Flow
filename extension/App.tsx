@@ -525,36 +525,36 @@ export default function App() {
 
         {/* Footer Hint Bar */}
         {/* Updated Contrast: text-gray-400, bg-black/40 */}
-        <div className="px-4 py-2 bg-black/40 border-t border-white/5 flex justify-between items-center text-[10px] text-gray-400 font-mono select-none">
-            <div className="flex gap-3 items-center">
-                {mode === 'SEARCH' && (
-                    <>
-                        <span><span className="text-gray-300">↑↓</span> {t.navNavigate}</span>
-                        <span><span className="text-gray-300">↵</span> {t.navSelect}</span>
-                        <button 
-                            onClick={() => openEditor()} 
-                            className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer ml-2"
-                        >
-                            <span className="text-gray-300">+</span> {t.createNew}
-                        </button>
-                    </>
-                )}
-                {mode === 'FILLING' && <span><span className="text-gray-300">↵</span> {t.navCopy}</span>}
-                {mode === 'EDITOR' && <span><span className="text-gray-300">Esc</span> {t.navCancel}</span>}
-            </div>
-            <div className="flex items-center gap-3">
-                <button 
-                  onClick={toggleLang}
-                  className="hover:text-white transition-colors flex items-center gap-1"
-                >
-                    <span className={lang === 'en' ? 'text-white' : 'text-gray-500'}>EN</span>
-                    <span className="text-gray-600">/</span>
-                    <span className={lang === 'cn' ? 'text-white' : 'text-gray-500'}>中</span>
-                </button>
-                <span className="opacity-30">|</span>
-                <span>PROMPT FLOW v1.0</span>
-            </div>
-        </div>
+		<div className="px-4 py-2 bg-black/40 border-t border-white/5 flex justify-between items-center text-xs text-gray-400 font-mono select-none">
+			<div className="flex gap-4 items-center">
+				{mode === 'SEARCH' && (
+					<>
+						<span><span className="text-gray-300">↑↓</span> {t.navNavigate}</span>
+						<span><span className="text-gray-300">↵</span> {t.navSelect}</span>
+						<button 
+							onClick={() => openEditor()} 
+							className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer ml-3"
+						>
+							<span className="text-gray-300">+</span> {t.createNew}
+						</button>
+					</>
+				)}
+				{mode === 'FILLING' && <span><span className="text-gray-300">↵</span> {t.navCopy}</span>}
+				{mode === 'EDITOR' && <span><span className="text-gray-300">Esc</span> {t.navCancel}</span>}
+			</div>
+			<div className="flex items-center gap-4">
+				<button 
+				  onClick={toggleLang}
+				  className="hover:text-white transition-colors flex items-center gap-1"
+				>
+					<span className={lang === 'en' ? 'text-white' : 'text-gray-500'}>EN</span>
+					<span className="text-gray-600">/</span>
+					<span className={lang === 'cn' ? 'text-white' : 'text-gray-500'}>中</span>
+				</button>
+				<span className="opacity-30">|</span>
+				<span>PROMPT FLOW v1.0</span>
+			</div>
+		</div>
     </div>
   );
 }
