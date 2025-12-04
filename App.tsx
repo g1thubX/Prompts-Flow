@@ -34,6 +34,7 @@ const TRANSLATIONS = {
     copied: "Copied to clipboard",
     confirmDelete: "Delete this prompt?",
     createNew: "New",
+    privacyPolicy: "Privacy",
     injector: {
       pressEnterFinish: "Press Enter to finish",
       valueFor: "Value for",
@@ -65,6 +66,7 @@ const TRANSLATIONS = {
     copied: "已复制到剪贴板",
     confirmDelete: "确认删除此提示词？",
     createNew: "新建",
+    privacyPolicy: "隐私政策",
     injector: {
       pressEnterFinish: "按回车完成",
       valueFor: "输入",
@@ -537,6 +539,15 @@ export default function App() {
                 {mode === 'EDITOR' && <span><span className="text-gray-300">Esc</span> {t.navCancel}</span>}
             </div>
             <div className="flex items-center gap-3">
+                <a 
+                  href="/privacy/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  {t.privacyPolicy}
+                </a>
+                <span className="opacity-30">|</span>
                 <button 
                   onClick={toggleLang}
                   className="hover:text-white transition-colors flex items-center gap-1"
