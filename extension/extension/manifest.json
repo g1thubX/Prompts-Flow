@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "PromptFlow",
   "version": "1.0.0",
-  "description": "A local-first, keyboard-centric neural extension for your AI workflow. Designed for simplicity and speed.",
+  "description": "A local-first, keyboard-centric AI prompt manager. Store, organize, and inject variables with zero latency.",
   "permissions": [
     "storage",
     "clipboardWrite",

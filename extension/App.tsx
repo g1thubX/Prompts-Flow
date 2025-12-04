@@ -178,6 +178,7 @@ export default function App() {
           if (filteredPrompts[selectedIndex]) {
             handlePromptSelection(filteredPrompts[selectedIndex]);
           } else {
+             // Check for 'new' command (case insensitive) or '新建' for Chinese users
              const isNewCommand = searchQuery.toLowerCase() === 'new' || searchQuery === '新建';
              if (isNewCommand) {
                 openEditor();
@@ -185,8 +186,10 @@ export default function App() {
           }
           break;
         case 'Tab':
+            // Optional: Tab could also trigger selection or autocomplete
             break; 
         case 'Escape':
+            // Optional: Minimize or clear search?
             if (searchQuery) setSearchQuery('');
             break;
       }
@@ -194,18 +197,20 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mode, filteredPrompts, selectedIndex, searchQuery, lang]);
+  }, [mode, filteredPrompts, selectedIndex, searchQuery, lang]); 
 
-  // Scroll active item into view
+  // --- Scroll Fix: Scroll active item into view using native API ---
   useEffect(() => {
-    if (mode === 'SEARCH' && listRef.current) {
-      const activeElement = listRef.current.children[selectedIndex] as HTMLElement;
-      if (activeElement) {
+    if (mode === 'SEARCH') {
+      const el = document.getElementById(`prompt-item-${selectedIndex}`);
+      if (el) {
         const container = listRef.current;
-        if (activeElement.offsetTop + activeElement.clientHeight > container.scrollTop + container.clientHeight) {
-          container.scrollTop = activeElement.offsetTop + activeElement.clientHeight - container.clientHeight;
-        } else if (activeElement.offsetTop < container.scrollTop) {
-          container.scrollTop = activeElement.offsetTop;
+        if(container){
+             if(el.offsetTop + el.clientHeight > container.scrollTop + container.clientHeight){
+                 container.scrollTop = el.offsetTop + el.clientHeight - container.clientHeight;
+             } else if(el.offsetTop < container.scrollTop){
+                 container.scrollTop = el.offsetTop;
+             }
         }
       }
     }
@@ -293,7 +298,7 @@ export default function App() {
   
   const handleDelete = async (e: React.MouseEvent, id: string) => {
       e.stopPropagation();
-      if(window.confirm(t.confirmDelete)) {
+      if(window.confirm(t.confirmDelete)) { 
           await promptService.delete(id);
           setPrompts(prev => prev.filter(p => p.id !== id));
       }
@@ -301,10 +306,14 @@ export default function App() {
 
 
   // --- Renders ---
+  
   const isCreateCommand = searchQuery.toLowerCase() === 'new' || searchQuery === '新建';
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center p-4">
+    // Master Builder: The "Device" Container
+    // Matching main App.tsx design with 80% opacity and 2xl blur
+    <div className="h-full w-full bg-[#0F1014]/80 backdrop-blur-2xl rounded-xl overflow-hidden border border-white/10 shadow-2xl relative text-white flex flex-col ring-1 ring-white/5 transition-all duration-300">
+      
       {/* Toast */}
       {toast && (
         <div className="absolute top-10 left-1/2 -translate-x-1/2 px-4 py-2 bg-indigo-500 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg shadow-indigo-500/20 animate-fade-in z-50">
@@ -312,11 +321,7 @@ export default function App() {
         </div>
       )}
 
-      {/* The Monolith (Command Palette) */}
-      {/* Updated Design: 80% Opacity, Blur, Rounded-xl */}
-      <div className="w-full max-w-[640px] bg-[#0F1014]/80 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] ring-1 ring-white/5 relative transition-all duration-300">
-        
-        {/* Decorative Top Line */}
+      {/* Header Area */}
         <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
 
         {/* --- SEARCH MODE HEADER --- */}
@@ -375,7 +380,7 @@ export default function App() {
         )}
 
         {/* --- BODY AREA --- */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar min-h-[300px]" ref={listRef}>
+        <div className="flex-1 overflow-y-auto custom-scrollbar" ref={listRef}>
           
           {/* 1. Search List */}
           {mode === 'SEARCH' && (
@@ -388,7 +393,7 @@ export default function App() {
                             </div>
                         ) : (
                             <>
-                                {/* Updated Contrast: text-gray-400, text-gray-500 */}
+                                {/* Updated Contrast: text-gray-400 */}
                                 <p className="text-gray-400 text-sm mb-1">{t.tabulaRasa}</p>
                                 <p className="text-gray-500 text-xs">
                                     {t.typeNew} <span className="text-indigo-400 font-mono">{lang === 'en' ? 'New' : 'New / 新建'}</span> {t.toCreateMagic}
@@ -402,6 +407,7 @@ export default function App() {
                         return (
                             <div
                                 key={prompt.id}
+                                id={`prompt-item-${index}`}
                                 onClick={() => { setSelectedIndex(index); handlePromptSelection(prompt); }}
                                 className={`px-4 py-3 mx-2 rounded-lg flex items-center justify-between group cursor-pointer transition-all duration-100 ${
                                     isSelected ? 'bg-white/10' : 'hover:bg-white/5'
@@ -549,8 +555,6 @@ export default function App() {
                 <span>PROMPT FLOW v1.0</span>
             </div>
         </div>
-
-      </div>
     </div>
   );
 }
